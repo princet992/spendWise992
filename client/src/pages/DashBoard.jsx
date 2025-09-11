@@ -4,8 +4,10 @@ import DailyExpanse from "./DailyExpanse";
 import { useGetExpanseDataQuery } from "@/services/expanseApi";
 import TotalExpanses from "./TotalExpanses";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const DashBoard = () => {
+  const { userName } = useSelector((state) => state.Auth);
   const { data, isLoading } = useGetExpanseDataQuery();
   const recentTx = data?.data || [];
   return (
@@ -13,7 +15,9 @@ const DashBoard = () => {
       <section className="p-5 mt-5 md:mt-0">
         <div className="flex justify-between items-center flex-wrap gap-5 pb-10">
           <div>
-            <h2 className="text-3xl font-bold">Welcome Back </h2>
+            <h2 className="text-2xl lg:text-3xl font-bold">
+              Welcome Back <span className="text-slate-700 ms-3">{userName}</span>{" "}
+            </h2>
             <p>Here is your spending overview</p>
           </div>
           <Link to="/addExpanse">

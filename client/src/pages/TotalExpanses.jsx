@@ -21,7 +21,7 @@ const TotalExpanses = ({ recentTx }) => {
       <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-6">
         <CategoryCard title="Total Spent" TitleIcon={ReceiptIndianRupee} Icon={IndianRupee} data={totalSpent} />
         <CategoryCard title="This Month" TitleIcon={Calendar1} Icon={IndianRupee} data={monthlyExpanse} />
-        <CategoryCard title="Daily Avg" TitleIcon={WalletMinimal} Icon={IndianRupee} data={dailyAverage} />
+        {/* <CategoryCard title="Daily Avg" TitleIcon={WalletMinimal} Icon={IndianRupee} data={dailyAverage} /> */}
         <CategoryCard title="Total Expanses" data={totalExpanses} />
         <CategoryCard title="Top Category" TitleIcon={Sparkle} data={biggestExpanse?.category || "_"} />
         <CategoryCard

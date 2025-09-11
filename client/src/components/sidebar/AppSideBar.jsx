@@ -116,7 +116,10 @@ const AppSideBar = () => {
                 <span className="text-xs text-muted-foreground">{email}</span>
               </div>
             </div>
-            <button className="p-2 rounded-md hover:bg-accent text-muted-foreground" onClick={handleLogOut}>
+            <button
+              className="p-2 rounded-md hover:bg-accent text-muted-foreground hover:text-green-500"
+              onClick={handleLogOut}
+            >
               <LogOut className="h-5 w-5" />
             </button>
           </div>
