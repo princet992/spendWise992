@@ -1,59 +1,59 @@
 import { Badge } from "@/components/ui/badge";
 
 const RecentExpanses = ({ recentTx, isLoading }) => {
-  if (isLoading) return <div className="text-center text-red-700 py-5">Loading,please wait...</div>;
+  if (isLoading) return <div className="text-center text-gray-500 py-5 font-medium">Loading, please wait...</div>;
+
   return (
-    <>
-      <section className="py-5">
-        <h2 className="text-2xl font-medium py-4">Recent Expanses</h2>
-        {recentTx.length > 0 ? (
-          <div className="space-y-4">
-            {recentTx.map((tx) => (
-              <div
-                key={tx._id}
-                className="flex flex-col sm:gap-4 gap-2 sm:flex-row justify-between items-start sm:items-center bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition"
-              >
-                <div className="flex flex-col sm:flex-1 mb-2 sm:mb-0">
-                  <h4 className="font-semibold text-slate-800 text-sm sm:text-base">{tx.title}</h4>
-                  <p className="text-xs text-slate-500">{tx.date}</p>
-                </div>
+    <section className="py-5">
+      <h2 className="text-2xl font-medium py-4 text-gray-700">Recent Expenses</h2>
 
-                <div className="flex gap-4 mb-2 sm:mb-0 flex-wrap">
-                  <Badge
-                    className={`${
-                      tx.category === "Food"
-                        ? "bg-red-100 text-red-700"
-                        : tx.category === "Transport"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-sky-100 text-sky-700"
-                    }`}
-                  >
-                    {tx.category}
-                  </Badge>
-                  <Badge
-                    className={`${
-                      tx.payment === "Cash"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : tx.payment === "Credit"
-                        ? "bg-purple-100 text-purple-700"
-                        : "bg-emerald-100 text-emerald-700"
-                    }`}
-                  >
-                    {tx.payment}
-                  </Badge>
-                </div>
-
-                <div>
-                  <span className="text-base sm:text-lg font-bold text-slate-900">₹{tx.amount}</span>
-                </div>
+      {recentTx.length > 0 ? (
+        <div className="space-y-4">
+          {recentTx.map((tx) => (
+            <div
+              key={tx._id}
+              className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 bg-gray-50 rounded-xl p-4 shadow-sm border border-gray-200 hover:shadow-md transition"
+            >
+              <div className="flex flex-col sm:flex-1">
+                <h4 className="font-semibold text-gray-700 text-sm sm:text-base">{tx.title}</h4>
+                <p className="text-xs text-gray-400">{tx.date}</p>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div>No transactions </div>
-        )}
-      </section>
-    </>
+
+              <div className="flex gap-2 flex-wrap">
+                <Badge
+                  className={`${
+                    tx.category === "Food"
+                      ? "bg-red-50 text-red-400"
+                      : tx.category === "Transport"
+                      ? "bg-blue-50 text-blue-400"
+                      : "bg-green-50 text-green-400"
+                  } px-2 py-1 text-xs rounded-full`}
+                >
+                  {tx.category}
+                </Badge>
+                <Badge
+                  className={`${
+                    tx.payment === "Cash"
+                      ? "bg-yellow-50 text-yellow-600"
+                      : tx.payment === "Credit"
+                      ? "bg-purple-50 text-purple-400"
+                      : "bg-emerald-50 text-emerald-400"
+                  } px-2 py-1 text-xs rounded-full`}
+                >
+                  {tx.payment}
+                </Badge>
+              </div>
+
+              <div>
+                <span className="text-gray-600 font-bold text-base sm:text-lg">₹{tx.amount}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-gray-400 text-center py-5">No transactions</div>
+      )}
+    </section>
   );
 };
 

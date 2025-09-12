@@ -14,7 +14,10 @@ export const registerUser = async (req, res) => {
       email,
       password,
     });
-    if (registerData) res.status(200).send({ message: "user registered successfully", registerData });
+    if (registerData) {
+      return res.status(200).send({ message: "user registered successfully", registerData });
+    }
+
     return res.status(400).send({ message: "failed to register user" });
   } catch (error) {
     console.log("error", error);
@@ -31,14 +34,16 @@ export const loginUser = async (req, res) => {
     });
     if (user) {
       const token = jwt.sign({ email: user.email }, process.env.JWT_TOKEN);
-      res.status(200).json({
+      return res.status(200).json({
         message: "login successfull",
         email: user.email,
         userName: user.userName,
         token,
         userId: user._id,
       });
-    } else res.status(400).send({ messgae: "Invalid email Password" });
+    } else {
+      return res.status(400).send({ message: "Invalid email Password" });
+    }
   } catch (error) {
     console.log("error", error);
   }

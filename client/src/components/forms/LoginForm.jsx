@@ -9,22 +9,30 @@ import { useForm } from "react-hook-form";
 import { useLoginUserMutation } from "@/services/usersApi";
 import { useDispatch } from "react-redux";
 import { setCredential } from "@/features/authSlice/AuthSlice";
+import { useState } from "react";
 
 export function LoginForm() {
   const dispatch = useDispatch();
-  const [loginUser] = useLoginUserMutation();
-  const { register, handleSubmit } = useForm();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const { register, handleSubmit, reset } = useForm();
+  const [formSuccess, setFormSuccess] = useState("");
+  const [error, setError] = useState("");
 
   const formSubmit = async (data) => {
     try {
-      const res = await loginUser(data);
-      dispatch(setCredential(res.data));
+      const res = await loginUser(data).unwrap();
+      setFormSuccess("Login successful 🎉 Redirecting...");
+      dispatch(setCredential(res));
     } catch (error) {
-      console.log("error", error);
+      setError(error?.data?.message);
+      setTimeout(() => {
+        setError("");
+      }, 2000);
     }
+    reset();
   };
   return (
-    <div className="max-w-sm mx-auto py-10">
+    <div className="max-w-sm mx-auto py-10 ">
       <div className={cn("flex flex-col gap-6")}>
         <Card>
           <CardHeader className="text-center">
@@ -48,6 +56,8 @@ export function LoginForm() {
                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                   <span className="bg-card text-muted-foreground relative z-10 px-2">Or continue with</span>
                 </div>
+                {error && <p className="text-center text-red-700 font-medium py-2">{error}</p>}
+                {formSuccess && <p className="text-center text-green-700 font-medium py-2">{formSuccess}</p>}
                 <div className="grid gap-6">
                   <div className="grid gap-3 relative">
                     <Label htmlFor="email">Email</Label>
@@ -77,7 +87,7 @@ export function LoginForm() {
                     <LockKeyhole className="absolute h-4 w-4 top-10 left-2 text-slate-700" />
                   </div>
                   <Button type="submit" className="w-full bg-[#096b92]">
-                    Login
+                    {isLoading ? "Logging In..." : "Login"}
                   </Button>
                 </div>
                 <div className="text-center text-sm">

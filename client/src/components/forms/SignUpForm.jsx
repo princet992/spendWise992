@@ -3,11 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LockKeyhole, Mail, MoveLeft, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRegisterUserMutation } from "@/services/usersApi";
+import { useState } from "react";
 
 const Schema = yup.object({
   userName: yup.string().required("userName is required"),
@@ -17,6 +18,7 @@ const Schema = yup.object({
 
 const SignUpForm = () => {
   const [registerUser] = useRegisterUserMutation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,14 +27,19 @@ const SignUpForm = () => {
     resolver: yupResolver(Schema),
   });
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const formSubmit = async (data) => {
     try {
-      console.log("submitting...");
-      const res = await registerUser(data);
-      console.log(res);
-      console.log("end");
+      const res = await registerUser(data).unwrap();
+      setSuccess(res.message);
+      navigate("/login");
     } catch (error) {
-      console.log("registerError", error);
+      setError(error?.data?.message);
+      setTimeout(() => {
+        setError("");
+      }, 1000);
     }
   };
 
@@ -47,6 +54,8 @@ const SignUpForm = () => {
               </CardDescription>
             </Link>
             <CardTitle className="text-xl">Create your account</CardTitle>
+            {error && <p className="text-center font-medium text-red-700 py-2">{error}</p>}
+            {success && <p className="text-center font-medium text-green-700 py-2">{success}</p>}
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(formSubmit)}>

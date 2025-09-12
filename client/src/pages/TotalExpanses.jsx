@@ -18,7 +18,7 @@ const TotalExpanses = ({ recentTx }) => {
   const biggestExpanse = recentTx.length > 0 ? recentTx.reduce((max, tx) => (tx.amount > max.amount ? tx : max)) : null;
   return (
     <>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3  gap-6 py-5">
         <CategoryCard title="Total Spent" TitleIcon={ReceiptIndianRupee} Icon={IndianRupee} data={totalSpent} />
         <CategoryCard title="This Month" TitleIcon={Calendar1} Icon={IndianRupee} data={monthlyExpanse} />
         {/* <CategoryCard title="Daily Avg" TitleIcon={WalletMinimal} Icon={IndianRupee} data={dailyAverage} /> */}

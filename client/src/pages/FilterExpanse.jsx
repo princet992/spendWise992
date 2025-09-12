@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Funnel, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -8,17 +8,22 @@ import { paymentMethod } from "@/constants/paymentMethod";
 import { dates } from "@/constants/selecteDate";
 import { useForm, Controller } from "react-hook-form";
 
-const FilterExpanse = () => {
-  const { register, handleSubmit, control } = useForm({
+const FilterExpanse = ({ onFilter }) => {
+  const { register, control, watch } = useForm({
     defaultValues: {
-      category: "",
-      payment: "",
-      date: "",
+      category: "All Categories",
+      payment: "All payments",
+      sort: "All",
     },
   });
-  const formSubmit = (data) => {
-    console.log(data);
-  };
+  const watchAll = watch();
+
+  useEffect(() => {
+    const filter = setTimeout(() => {
+      onFilter?.(watchAll);
+    }, 500);
+  }, [watchAll, onFilter]);
+
   return (
     <>
       <Card className="p-3 mb-6">
@@ -27,7 +32,7 @@ const FilterExpanse = () => {
           <h2 className="text-2xl font-bold">Filters & Search</h2>
         </div>
         <div>
-          <form onSubmit={handleSubmit(formSubmit)} className="grid md:grid-cols-2  lg:grid-cols-4 gap-5">
+          <form className="grid md:grid-cols-2  lg:grid-cols-3 gap-5">
             <div className="relative">
               <Input type="text" placeholder="Search expenses..." className="ps-8" {...register("text")} />
               <Search className="absolute top-2 left-1 h-5 w-5 text-slate-500" />
@@ -43,6 +48,7 @@ const FilterExpanse = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
+                        <SelectItem value="All Categories">All Categories</SelectItem>
                         {category.map((c) => (
                           <SelectItem value={c.label} key={c.id}>
                             {c.label}
@@ -65,6 +71,7 @@ const FilterExpanse = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
+                        <SelectItem value="All payments">All payments</SelectItem>
                         {paymentMethod.map((pay) => (
                           <SelectItem value={pay.label} key={pay.id}>
                             {pay.label}
@@ -76,17 +83,18 @@ const FilterExpanse = () => {
                 )}
               />
             </div>
-            <div>
+            {/* <div>
               <Controller
-                name="date"
+                name="sort"
                 control={control}
                 render={({ field }) => (
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select date" />
+                      <SelectValue placeholder="Choose " />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
+                        <SelectItem value="All">All</SelectItem>
                         {dates.map((date) => (
                           <SelectItem value={date.title} key={date.id}>
                             {date.title}
@@ -97,7 +105,7 @@ const FilterExpanse = () => {
                   </Select>
                 )}
               />
-            </div>
+            </div> */}
           </form>
         </div>
       </Card>
