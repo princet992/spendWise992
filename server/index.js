@@ -9,7 +9,9 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin:"https://expansetracker992.netlify.app/" || "http://localhost:5173"
+}));
 
 //register User
 app.post("/userAuth", registerUser);
