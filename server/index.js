@@ -3,17 +3,22 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import { loginUser, registerUser } from "./controller/AuthController.js";
-import { createExpanse, deleteExpanseData, getExpanseData } from "./controller/ExpanseController.js";
+import {
+  createExpanse,
+  deleteExpanseData,
+  getExpanseData,
+} from "./controller/ExpanseController.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors(
-//   {
-//   origin:"https://expansetracker992.netlify.app/" || "http://localhost:5173"
-// }
-));
+app.use(
+  cors({
+    origin: "https://expansetracker992.netlify.app/" || "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 //register User
 app.post("/userAuth", registerUser);
