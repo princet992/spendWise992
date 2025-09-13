@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const expanseApi = createApi({
   reducerPath: "expanseData",
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_EXPANSE_URL  }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL }),
   tagTypes: ["expanse"],
   endpoints: (builder) => ({
     //get Expanse data
@@ -35,4 +35,8 @@ export const expanseApi = createApi({
   }),
 });
 
-export const { useCreateExpanseDataMutation, useGetExpanseDataQuery, useRemoveExpanseDataMutation } = expanseApi;
+export const {
+  useCreateExpanseDataMutation,
+  useGetExpanseDataQuery,
+  useRemoveExpanseDataMutation,
+} = expanseApi;
