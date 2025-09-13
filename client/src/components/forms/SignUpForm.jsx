@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LockKeyhole, Mail, MoveLeft, User } from "lucide-react";
@@ -13,7 +19,10 @@ import { useState } from "react";
 const Schema = yup.object({
   userName: yup.string().required("userName is required"),
   email: yup.string().email("Invalid email").required("email is required"),
-  password: yup.string().min(6, "must be at least 6 digit long").required("password is required"),
+  password: yup
+    .string()
+    .min(6, "must be at least 6 digit long")
+    .required("password is required"),
 });
 
 const SignUpForm = () => {
@@ -44,7 +53,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto py-10">
+    <div className="max-w-sm mx-auto py-10 px-2">
       <div className="flex flex-col gap-6">
         <Card>
           <CardHeader className="text-center">
@@ -54,8 +63,16 @@ const SignUpForm = () => {
               </CardDescription>
             </Link>
             <CardTitle className="text-xl">Create your account</CardTitle>
-            {error && <p className="text-center font-medium text-red-700 py-2">{error}</p>}
-            {success && <p className="text-center font-medium text-green-700 py-2">{success}</p>}
+            {error && (
+              <p className="text-center font-medium text-red-700 py-2">
+                {error}
+              </p>
+            )}
+            {success && (
+              <p className="text-center font-medium text-green-700 py-2">
+                {success}
+              </p>
+            )}
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(formSubmit)}>
@@ -68,9 +85,15 @@ const SignUpForm = () => {
                     type="text"
                     placeholder="prince thakur"
                     className="ps-8"
-                    {...register("userName", { required: "userName is required" })}
+                    {...register("userName", {
+                      required: "userName is required",
+                    })}
                   />
-                  {errors.userName && <p className="text-sm text-red-700 ">{errors.userName.message}</p>}
+                  {errors.userName && (
+                    <p className="text-sm text-red-700 ">
+                      {errors.userName.message}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-3 relative">
                   <Label htmlFor="email">Email</Label>
@@ -82,7 +105,11 @@ const SignUpForm = () => {
                     {...register("email", { required: "email is required" })}
                   />
                   <Mail className="absolute h-4 w-4 top-9 left-2 text-slate-700" />
-                  {errors.email && <p className="text-sm text-red-700 ">{errors.email.message}</p>}
+                  {errors.email && (
+                    <p className="text-sm text-red-700 ">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-3 relative">
                   <Label htmlFor="password">Password</Label>
@@ -91,10 +118,16 @@ const SignUpForm = () => {
                     type="password"
                     placeholder="*****"
                     className="ps-8"
-                    {...register("password", { required: "password is required" })}
+                    {...register("password", {
+                      required: "password is required",
+                    })}
                   />
                   <LockKeyhole className="absolute h-4 w-4 top-9 left-2 text-slate-700" />
-                  {errors.password && <p className="text-sm text-red-700 ">{errors.password.message}</p>}
+                  {errors.password && (
+                    <p className="text-sm text-red-700 ">
+                      {errors.password.message}
+                    </p>
+                  )}
                 </div>
                 <Button type="submit" className="w-full bg-[#096b92]">
                   Create Account
