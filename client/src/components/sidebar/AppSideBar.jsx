@@ -31,8 +31,7 @@ const AppSideBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { email, userName } = useSelector((state) => state.Auth);
-  const { theme } = useSelector((state) => state.Theme);
-  const { setOpen } = useSidebar();
+   const { toggleSidebar } = useSidebar();
 
   const handleLogOut = () => {
     dispatch(logOutUser());
@@ -40,7 +39,9 @@ const AppSideBar = () => {
   };
 
   const closeIfMobile = () => {
-    setOpen(false);
+     if(window.innerWidth < 768){
+        toggleSidebar()
+    }
   };
 
   return (
@@ -72,6 +73,7 @@ const AppSideBar = () => {
                   <SidebarMenuItem key={item.title}>
                     <NavLink
                       to={item.url}
+                      onClick={closeIfMobile}
                       className={({ isActive }) =>
                         `flex items-center gap-2 px-2 py-2 rounded-md transition-colors font-medium ${
                           isActive
