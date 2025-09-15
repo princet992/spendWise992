@@ -12,12 +12,14 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { ChartColumnIncreasing, House, IndianRupee, Plus, LogOut } from "lucide-react";
+import { ChartColumnIncreasing, House, IndianRupee, Plus, LogOut, Moon, Sun } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import ExpanseButton from "../button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { logOutUser } from "@/features/authSlice/AuthSlice";
+import { Button } from "../ui/button";
+import { toggleTheme } from "@/features/ThemeSlice/ThemeSlice";
 
 const items = [
   { title: "Dashboard", url: "/", icon: House },
@@ -29,6 +31,7 @@ const AppSideBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { email, userName } = useSelector((state) => state.Auth);
+  const { theme } = useSelector((state) => state.Theme);
   const { setOpen } = useSidebar();
 
   const handleLogOut = () => {
@@ -44,6 +47,11 @@ const AppSideBar = () => {
     <>
       <Sidebar>
         <SidebarHeader>
+          {/* <div className="flex justify-end">
+            <Button onClick={() => dispatch(toggleTheme())} className=" h-8 w-8 rounded-full bg-slate-400 ">
+              {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+            </Button>
+          </div> */}
           <div className="flex items-center gap-2 px-3 py-4">
             <div className="bg-gradient-to-br from-[#0dd1b7] to-[#177aec] p-2 rounded-lg">
               <ChartColumnIncreasing className="h-6 w-6 text-white" />
